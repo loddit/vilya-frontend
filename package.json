@@ -1,0 +1,28 @@
+{
+  "name": "vilya-frontend",
+  "version": "0.0.0",
+  "description": "Front end of CODE:vilya.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "coffee-script": "~1.6.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0rc7",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-stylus": "~0.13.2",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-watch": "~0.1.4",
+    "grunt-contrib-connect": "~0.7.1",
+    "grunt-env": "0.4.0",
+    "ozjs": "~2.6.3",
+    "ozma": "~1.7.1",
+    "grunt-dispatch": "~0.2.1",
+    "grunt-ozjs": "~0.4.2"
+  }
+}

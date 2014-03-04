@@ -1,0 +1,27 @@
+{
+  "name": "vilya-frontend",
+  "version": "0.0.0",
+  "authors": [
+    "Chase Zhang <yun.er.run@gmail.com>"
+  ],
+  "description": "Front end of CODE:vilya",
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ozjs": "~2.6.2",
+    "jquery": "~1.9.0",
+    "underscore": "~1.4.3",
+    "backbone": "~1.0.0",
+    "modernizr": "~2.6.2",
+    "bootstrap": "~3.1.1"
+  },
+  "devDependencies": {
+    "ozjs": "~2.6.3"
+  }
+}
