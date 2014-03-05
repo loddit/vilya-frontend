@@ -22,7 +22,7 @@
     "grunt-env": "0.4.0",
     "ozjs": "~2.6.3",
     "ozma": "~1.7.1",
-    "grunt-dispatch": "~0.2.1",
-    "grunt-ozjs": "~0.4.2"
+    "grunt-ozjs": "~0.4.2",
+    "grunt-connect-proxy": "~0.1.8"
   }
 }

@@ -12,6 +12,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-connect'
+  grunt.loadNpmTasks 'grunt-connect-proxy'
   grunt.loadNpmTasks 'grunt-contrib-stylus'
   grunt.loadNpmTasks 'grunt-env'
   
@@ -19,13 +20,25 @@ module.exports = (grunt) ->
   DEV_BUILD_PATH = 'build'
   PRODUCTION_BUILD_PATH = "production"
   DEV_SERVER_PORT = 9000
-  
+  CODE_SERVER_HOST = 'localhost'
+  CODE_SERVER_PORT = 8000
+
   grunt.initConfig
     connect:
       server:
         options:
           port: DEV_SERVER_PORT
           base: DEV_BUILD_PATH
+          middleware: (connect, options, middlewares) =>
+            middlewares.unshift require('grunt-connect-proxy/lib/utils').proxyRequest
+            return middlewares
+        proxies:
+          context: '/api'
+          host: CODE_SERVER_HOST
+          port: CODE_SERVER_PORT
+          https: false
+          changeOrigin: false
+          xforward: false
 
     stylus:
       development:
@@ -117,6 +130,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', [
     'development'
+    'configureProxies:server'
     'connect:server'
     'watch'
   ]
