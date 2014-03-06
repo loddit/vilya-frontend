@@ -43,10 +43,10 @@ module.exports = (grunt) ->
     stylus:
       development:
         options:
-          paths: "#{APP_PATH}/stylus"
+          paths: ["#{APP_PATH}/stylus"]
           import: ['consts']
-          files:
-            'build/css/main.css': "#{APP_PATH}/stylus/*.styl"
+        files:
+          'build/css/main.css': ["#{APP_PATH}/stylus/main.styl"]
 
     coffee:
       development:
@@ -84,6 +84,7 @@ module.exports = (grunt) ->
               'backbone/backbone.js'
               'modernizr/modernizr.js'
               'underscore/underscore.js'
+              'retina.js/src/retina.js'
             ]
             dest: 'build/js/lib'
           }
@@ -95,6 +96,15 @@ module.exports = (grunt) ->
             src: ['css/**', 'fonts/**']
             dest: 'build/css/bootstrap'
           }
+
+          # copying font awesome's css and fonts
+          {
+            expand: true
+            cwd: 'bower_components/fontawesome'
+            src: ['css/**', 'fonts/**']
+            dest: 'build/css/fontawesome'
+          }
+
         ]
 
     ozma:
@@ -107,11 +117,14 @@ module.exports = (grunt) ->
 
     watch:
       stylus:
-        files: "#{APP_PATH}/stylus/*.styl"
+        files: "#{APP_PATH}/stylus/**/*.styl"
         tasks: 'stylus:development'
       coffee:
-        files: "#{APP_PATH}/coffee/*.coffee"
-        tasks: 'coffee:development'
+        files: "#{APP_PATH}/coffee/**/*.coffee"
+        tasks: [
+          'coffee:development'
+          'ozma:development'
+        ]
       copy:
         files: [
           "#{APP_PATH}/index.html",

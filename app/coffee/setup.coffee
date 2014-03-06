@@ -7,6 +7,9 @@ define 'jquery', 'lib/jquery.js'
 define 'backbone', 'lib/backbone.js'
 define 'underscore', 'lib/underscore.js'
 define 'modernizer', 'lib/modernizer.js'
+define 'retina', 'lib/retina.js'
 
-require ['main'], (app) =>
-  console.log 'Contribute to vilya at https://github.com/douban/code'
+require ['modernizer', 'retina']
+
+require ['router'], (Router) =>
+  window.router = new Router()
