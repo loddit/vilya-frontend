@@ -3,31 +3,26 @@ define [
   'backbone'
   # require views
   'views/layout'
-  'views/home'
-  'views/user'
-  'views/project'
-], ($, Backbone, LayoutView, HomeView, UserView, ProjectView) =>
+], ($, Backbone, LayoutView) =>
   class Router extends Backbone.Router
 
     routes:
-      '/': 'home'
-      '/:user': 'user'
-      '/:user/:project(/:endpoint)': 'project'
+      '': 'home'
+      ':user': 'user'
+      ':user/:project(/:endpoint)': 'project'
 
     initialize: ->
-      @layout = new LayoutView()
-      @loadView  @layout
+      @layout = new LayoutView({el: $('#mainlayout').get(0)})
+      @layout.load()
+      Backbone.history.start {}
 
     home: ->
-      new HomeView()
+      @layout.showHome()
 
     user: (user) ->
-      new UserView user: user
+      @layout.showUser user
 
     project: (user, project, endpoint) ->
-      new ProjectView
-        user: user
-        project: project
-        endpoint: endpoint
+      @layout.showProject user, project, endpoint
 
   return Router

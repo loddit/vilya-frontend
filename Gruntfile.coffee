@@ -52,8 +52,8 @@ module.exports = (grunt) ->
       development:
         files: [
           expand: true,
-          cwd: "#{APP_PATH}/coffee",
-          src: '*.coffee',
+          cwd: "#{APP_PATH}/coffee/",
+          src: '**/*.coffee',
           dest: "#{DEV_BUILD_PATH}/js/",
           ext: '.js'
         ]
@@ -114,6 +114,7 @@ module.exports = (grunt) ->
           baseUrl: 'build/js/'
           destUrl: 'build/.tmp/js/'
           loader: 'lib/oz.js'
+          disableAutoSuffix: true
 
     watch:
       stylus:

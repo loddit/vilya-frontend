@@ -4,15 +4,35 @@ define [
   'underscore'
 ], ($, Backbone, _) =>
   class BaseView extends Backbone.View
-    
+
+    load: ->
+      @_loadFailed('cancel')
+      @dtd = $.Deferred()
+      @render()
+      return @dtd.promise()
+
     loadSubView: (selector, viewOrHtml) ->
       $subEl = @$el.find(selector).first()
       if typeof viewOrHtml == 'string'
         $subEl.html viewOrHtml
+        return viewOrHtml
       else if $subEl[0] == view.el
-        viewOrHtml.render()
+        return viewOrHtml.load()
       else
-        $subEl.html viewOrHtml.render().el
+        $subEl.html viewOrHtml.el
+        return viewOrHtml.load()
+
+    waitFor: (deferreds..., callback) ->
+      callback = callback || (->)
+      $.when.apply(null, deferreds).done(callback)
+
+    ready: (callback) ->
+      if @dtd and @dtd.state() == 'resolved'
+        callback() if callback
+        return true
+      else
+        @waitFor @load(), callback
+        return false
 
     _cachedTemplates: ->
       cachedTemplates = window._TEMPLATES
@@ -38,11 +58,17 @@ define [
       for name in templatesToLoad
         if not cachedTemplates[name]
           deffered.push @_loadTemplate(name)
-      $.when.apply(null, deffered).done(callback)
+      if deffered.length
+        $.when.apply(null, deffered).done(callback).fail =>
+          @loadFailed 'template'
+      else
+        callback()
 
     getTemplate: (name) ->
       if not name in (@templates || [])
-        throw new Error("Attempted to access templates '#{name}' before states in templates fields"
+        throw new Error "Attempted to access templates '#{name}' before announced in templates fields"
+      @_cachedTemplates()[name]
+
 
     render: ->
       # NOTICE:
@@ -51,26 +77,43 @@ define [
       #   * beforeRender
       #   * renderContext
       #   * afterRendered
-      @_loadTemplates =>
-        @_beforeRender =>
+      @_beforeRender =>
+        @dtd.notifyWith(this) if @dtd
+        @_loadTemplates =>
+          @dtd.notifyWith(this) if @dtd
           @_renderContext =>
             @_afterRendered()
+            if @dtd
+              @dtd.notifyWith(this)
+              @dtd.resolve()
+      return this
 
     _beforeRender: (callback) ->
       if @beforeRender
-        @beforeRender.apply this, callback
+        @beforeRender.call this, callback
+        if @beforeRender.length == 0
+          callback()
       else
         callback()
+
     
     _renderContext: (callback) ->
       if @renderContext
-        @renderContext.apply this, callback
+        @renderContext.call this, callback
+        if @renderContext.length == 0
+          callback()
       else
         callback()
 
     _afterRendered: ->
       if @afterRendered
-        @afterRendered.apply this
+        @afterRendered.call this
 
+    _loadFailed: (reason) ->
+      if @dtd and @dtd.state() == 'pending'
+        @dtd.rejectWith(this)
+      if @loadFailed
+        @loadFailed.call this, reason
 
+  return BaseView
 

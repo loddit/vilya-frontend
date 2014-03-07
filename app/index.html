@@ -3,22 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CODE:vilya</title>
+  <title>:vilya:</title>
   <link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 <body>
-<div id='loading'>
+<div id="mainlayout">
+  <nav id="nav" class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">:vilya:</a>
+      </div>
+      
+      <div class="collapse navbar-collapse">
+        <form id="search" class="navbar-form navbar-left" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-btn">
+              <a class="btn btn-default" type="button"><i class="fa fa-search"></i></a>
+            </div>
+          </div>
+        </form>
+        <ul class="nav navbar-nav">
+          <li><a href="">
+            Teams <i class="fa fa-angle-down"></i>
+          </a></li>
+          <li><a href="">
+            Projects <i class="fa fa-angle-down"></i>
+          </a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="new-btn"><button class="btn btn-default navbar-btn">
+            New
+          </button></li>
+          <li id="notification">
+          <a><i class="fa fa-bell"></i></a>
+          </li>
+          <li id="userinfo">
+          <a>
+            <span class="user-icon"></span>
+            <i class="fa fa-angle-down"></i>
+          </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div id="main-container">
+    <div class="container">
+    </div>
+  </div>
+</div>
+<div id='loading' style="display:none">
   <div class="container">
     <div class="center">
-    <h1>CODE:<span>vilya</span></h1>
-    <small>loading...</small>
+    <h1>:vilya:</h1>
+    <small>LOADING</small>
     </div>
     <div class="spinner"></div>
   </div>
 </div>
-<div id="mainlayout"></div>
-<script src="/js/setup_pack.js"></script>
+<script src="/js/setup.js"></script>
 </body>
 </html>
