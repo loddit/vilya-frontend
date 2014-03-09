@@ -34,8 +34,9 @@ define [
         @waitFor @load(), callback
         return false
 
-    showLoading: ->
-      @$el.html '
+    showLoading: (ele) ->
+      $ele = ele || @$el
+      $ele.html '
       <div class="spinner view-spinner">
         <div class="dot1"></div>
         <div class="dot2"></div>
