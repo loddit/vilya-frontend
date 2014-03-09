@@ -10,13 +10,11 @@ define [
 
       initialize: ->
         @navView = new NavView({el:@$el.find('#nav').get(0)})
+        @container = @$el.find '#main-container'
+        @loadingView = $ '#page-loading'
 
       renderContext: (callback)->
         @waitFor @navView.load(), callback
-
-      afterRendered: ->
-        @container = @$el.find '#main-container'
-        console.log 'layout rendered'
 
       showHome: ->
         @homeView = new HomeView() if not @homeView
@@ -34,8 +32,14 @@ define [
         @ready =>
           @container.html view.el
           view.ready =>
-            console.log 'content view changed'
+            @_hidePageLoading()
 
+      _showPageLoading: ->
+        @loadingView.css display:'block'
+        @loadingView.fadeIn 400
 
-        
-
+      _hidePageLoading: ->
+        if @loadingView.css('display') == 'none'
+          return
+        @loadingView.fadeOut 400, =>
+          @loadingView.css display:'none'

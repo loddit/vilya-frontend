@@ -34,6 +34,14 @@ define [
         @waitFor @load(), callback
         return false
 
+    showLoading: ->
+      @$el.html '
+      <div class="spinner view-spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+      </div>
+      '
+
     _cachedTemplates: ->
       cachedTemplates = window._TEMPLATES
       if not cachedTemplates
@@ -53,7 +61,7 @@ define [
       templatesToLoad = @templates || []
       if not templatesToLoad instanceof Array
         templatesToLoad = [templatesToLoad ]
-      cachedTemplates = @_cachedTemplates
+      cachedTemplates = @_cachedTemplates()
       deffered = []
       for name in templatesToLoad
         if not cachedTemplates[name]
